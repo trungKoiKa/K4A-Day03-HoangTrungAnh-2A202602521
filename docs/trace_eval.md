@@ -8,15 +8,13 @@
 
 ## 1. BẢNG CHẤM ĐIỂM AGENTIC FIT SCORING MATRIX (ĐÁNH GIÁ CHỦ ĐỀ)
 
-| Tiêu chí Đánh giá           | Mức độ (1 - 5) | Giải trình chi tiết lý do chọn điểm                                      |
-| --------------------------- | -------------- | ------------------------------------------------------------------------ |
-| **1. Multi-step Reasoning** | 4/5            | Bài toán có yêu cầu chia nhỏ nhiều bước suy luận nối tiếp nhau không?    |
-| **2. Tool Interaction**     | 4/5            | Hệ thống có cần kết nối với MCP Server / Cơ sở dữ liệu bên ngoài không?  |
-| **3. Dynamic Decision**     | 3/5            | Bước tiếp theo có phụ thuộc vào kết quả quan sát bước trước không?       |
-| **4. Long Horizon Goal**    | 4/5            | Hệ thống có phải giữ mục tiêu xuyên suốt qua nhiều lượt xử lý không?     |
-| **TỔNG ĐIỂM AGENTIC FIT**   | **15/ 20**     | *Nếu tổng điểm > 12/20: Bài toán rất phù hợp triển khai Agentic System.* |
-
-Tổng điểm của 4 tiêu chí là 15 > 12: Bài toán với chủ đề: Trợ lý học vụ & Tra cứu lịch: Tra cứu điểm GPA, lịch thi và đặt lịch tư vấn học vụ với Cố vấn. thi rất phù hợp để triển khai Agentic System
+| Tiêu chí Đánh giá           | Mức độ (1 - 5) | Giải trình chi tiết lý do chọn điểm                                                                                                                                                                                                                                                                                                                                               |     |
+| --------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| **1. Multi-step Reasoning** | 4/5            | Tra cứu GPA hoặc lịch thi đơn thuần chỉ là truy vấn dữ liệu. Nhưng khi người dùng hỏi kiểu “em có đủ điều kiện đăng ký môn/đủ điều kiện tốt nghiệp không?”, trợ lý phải lấy điểm từng học phần, số tín chỉ, quy chế đào tạo rồi tính và giải thích kết quả. Đặt lịch tư vấn cũng có chuỗi bước: hiểu nhu cầu → kiểm tra lịch trống → đề xuất khung giờ → xác nhận → tạo lịch hẹn. |     |
+| **2. Tool Interaction**     | 4/5            | Bắt buộc cần kết nối dữ liệu bên ngoài: hệ thống quản lý học tập/SIS để lấy GPA và điểm; hệ thống lịch thi; lịch làm việc của cố vấn; có thể thêm email hoặc calendar để gửi xác nhận. Đây là điểm mạnh nhất của đề tài                                                                                                                                                           |     |
+| **3. Dynamic Decision**     | 3/5            | Hành động tiếp theo phụ thuộc dữ liệu vừa quan sát. Ví dụ: nếu lịch thi bị trùng hoặc quá sát nhau, agent cảnh báo; nếu cố vấn không rảnh, agent tìm khung giờ khác; nếu GPA thấp hơn ngưỡng, agent đề xuất đặt lịch tư vấn học vụ hoặc hiển thị các môn cần cải thiện.                                                                                                           |     |
+| **4. Long Horizon Goal**    | 4/5            | Agent có thể giữ mục tiêu qua nhiều lượt: “tìm lịch tư vấn phù hợp trước kỳ thi”, “theo dõi thay đổi lịch thi”, “nhắc sinh viên trước ngày thi”. Tuy nhiên, nếu chỉ làm tra cứu một lần rồi trả kết quả thì tính long-horizon chưa cao. Có thể nâng điểm bằng tính năng theo dõi, nhắc lịch và xử lý đổi lịch tự động.                                                            |     |
+| **TỔNG ĐIỂM AGENTIC FIT**   | **15/ 20**     | Tổng điểm của 4 tiêu chí là 15 > 12: Bài toán với chủ đề: Trợ lý học vụ & Tra cứu lịch: Tra cứu điểm GPA, lịch thi và đặt lịch tư vấn học vụ với Cố vấn. thi rất phù hợp để triển khai Agentic System                                                                                                                                                                             |     |
 
 ---
 
