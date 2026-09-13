@@ -50,7 +50,11 @@ python src/app.py --all
 > 🔑 **QUY ĐỊNH BẮT BUỘC VỀ API KEY VÀ NỘP BÀI (SUBMISSION REQUIREMENT):**  
 > 
 > 1. **Giai đoạn gõ code & debug (Miễn phí 0đ):** Hệ thống mặc định chạy `MockOfflineProvider` giúp bạn thực hành gõ code, kiểm thử logic ban đầu hoàn toàn miễn phí, không tốn token, không lo nghẽn mạng.  
-> 2. **Giai đoạn NỘP BÀI CHÍNH THỨC (Bắt buộc dùng LLM thật):** Khi chạy nghiệm thu để lấy dữ liệu dán vào báo cáo [`docs/trace_eval.md`](docs/trace_eval.md) nộp bài, **học viên BẮT BUỘC phải mở file `.env` điền `GEMINI_API_KEY` (hoặc `OPENAI_API_KEY`)** để Agent giao tiếp với mô hình LLM thật.  
+> 2. **Giai đoạn NỘP BÀI CHÍNH THỨC (Bắt buộc dùng LLM thật):** Khi chạy nghiệm thu để lấy dữ liệu dán vào báo cáo [`docs/trace_eval.md`](docs/trace_eval.md) nộp bài, **học viên BẮT BUỘC phải mở file `.env` điền API key của provider**. Với Groq, đặt `LLM_PROVIDER=groq`, điền `GROQ_API_KEY` và dùng model `openai/gpt-oss-safeguard-20b` (`GROQ_MODEL`).
+
+Với câu hỏi về hồ sơ của chính mình, không cần nhập mã sinh viên hay tên cố vấn trong câu hỏi. Ứng dụng thật cần lấy `student_id` từ phiên đăng nhập; ở bản demo, cấu hình `CURRENT_STUDENT_ID` một lần trong `.env` bằng một mã có trong `MOCK_DATABASE`. Tool sẽ tra cố vấn từ hồ sơ sinh viên. Nếu không có hồ sơ hiện tại, agent sẽ báo cần ngữ cảnh thay vì đoán danh tính.
+
+Ví dụ trong chế độ `--interactive`: “Tra cứu GPA của tôi” hoặc “Đặt lịch với cố vấn của tôi lúc 14:00 ngày 15/09/2026”. Với yêu cầu tra cứu một sinh viên khác, ứng dụng vẫn cần thông tin đủ để xác định đúng người.
 > 
 > ⚠️ *Lưu ý:* Bài nộp chỉ chạy trên Mock Provider mà không kết nối LLM API thật sẽ bị trừ điểm phần nghiệm thu thực tế (Tiêu chí 2 & Tiêu chí 3 trong Rubric).
 

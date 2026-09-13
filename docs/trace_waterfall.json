@@ -3,9 +3,9 @@
     "step": 1,
     "query": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
     "action_type": "FINAL_ANSWER",
-    "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool.",
-    "output": "[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-    "latency_ms": 2845.93
+    "thought": "Groq phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Chào bạn! Dưới đây là một bản tóm lược các quy chế học vụ cơ bản mà sinh viên tại Đại học VinUni cần lưu ý:\n\n| # | Nội dung | Nội dung chính |\n|---|----------|----------------|\n| 1 | **Chương trình đào tạo** | VinUni áp dụng khung chương trình 4 năm (đại học) với hệ thống môn học chuyên ngành, môn nền tảng và môn tự chọn. Mỗi học kỳ có một lịch học cố định và các kỳ thi cuối kỳ. |\n| 2 | **Điểm và học bổng** | Đánh giá học lực dựa trên điểm trung bình (GPA). Điểm tối thiểu để vượt môn thường là 5.0/10. Sinh viên có thể tham gia học bổng dựa trên thành tích học tập hoặc nhu cầu tài chính. |\n| 3 | **Điểm xuất sắc và điều kiện tốt nghiệp** | Để được xuất sắc, sinh viên cần đạt GPA ≥ 8.0 và hoàn thành các yêu cầu môn học. Để tốt nghiệp, sinh viên cần tích lũy đủ tín chỉ (thông thường 120 tín chỉ) và hoàn thành luận văn/thực tập. |\n| 4 | **Học phí và thanh toán** | Học phí được tính theo năm học và từng bộ môn. Các kỳ thanh toán thường là 2 lần: đầu năm và cuối năm. Học phí được miễn giảm khi có học bổng hoặc trong các trường hợp đặc biệt. |\n| 5 | **Hồ sơ học vụ** | Mỗi sinh viên có một hồ sơ học vụ bao gồm: điểm, lịch thi, trạng thái đăng ký môn học, điều kiện tài chính, v.v. Sinh viên cần duy trì hồ sơ hợp lệ và cập nhật thường xuyên. |\n| 6 | **Quy định về vi phạm học tập** | Các hành vi như gian lận, sao chép, không nộp bài đúng hạn có thể dẫn đến trừng phạt: cảnh cáo, hủy điểm, hoặc đình chỉ học tập. |\n| 7 | **Thư ký môn học và báo cáo** | Tất cả các quyết định liên quan đến môn học (điểm, đăng ký) được lưu trữ trong hệ thống báo cáo của từng khoa. Sinh viên có thể tra cứu thông tin này qua portal sinh viên. |\n| 8 | **Hệ thống hỗ trợ sinh viên** | VinUni có Cố vấn Học tập, Hệ thống tư vấn trực tuyến và phòng hỗ trợ học tập để giúp sinh viên giải quyết các vấn đề học tập, tài chính, và phát triển kỹ năng. |\n\nNếu bạn cần chi tiết hơn về một quy chế cụ thể (ví dụ: quy định về học bổng, quy trình đăng ký môn học, hoặc quy tắc vi phạm học tập), hãy cho tôi biết để mình tra cứu thêm thông tin!",
+    "latency_ms": 3048.2
   },
   {
     "step": 1,
@@ -15,15 +15,126 @@
     "arguments": {
       "student_id": "SV2026001"
     },
-    "observation": {},
-    "latency_ms": 799.12
+    "observation": {
+      "status": "SUCCESS",
+      "student_id": "SV2026001",
+      "data": {
+        "full_name": "Nguyễn Văn An",
+        "class": "AI-K4",
+        "gpa": 3.85,
+        "email": "an.nv@vinuni.edu.vn",
+        "status": "Đang học",
+        "advisor": "PGS.TS Nguyễn Văn A"
+      }
+    },
+    "latency_ms": 365.28
   },
   {
     "step": 2,
     "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
     "action_type": "FINAL_ANSWER",
-    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
-    "output": "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server (hãy hoàn thành TODO 2.1).",
-    "latency_ms": 10.0
+    "thought": "Groq phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Thông tin học vụ của sinh viên SV2026001:\n\n- **Họ và tên**: Nguyễn Văn An  \n- **Lớp**: AI-K4  \n- **Điểm trung bình**: 3.85  \n- **Email**: an.nv@vinuni.edu.vn  \n- **Tình trạng học tập**: Đang học  \n- **Cố vấn**: PGS.TS Nguyễn Văn A",
+    "latency_ms": 399.81
+  },
+  {
+    "step": 1,
+    "query": "Hãy đặt lịch tư vấn học vụ cho sinh viên SV2026001 với cố vấn PGS.TS Nguyễn Văn A vào lúc 14:00 ngày 15/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "schedule_appointment",
+    "arguments": {
+      "advisor_name": "PGS.TS Nguyễn Văn A",
+      "datetime_str": "14:00 15/09/2026",
+      "student_id": "SV2026001"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "booking_id": "BK-SV2026001-99",
+      "student_id": "SV2026001",
+      "datetime": "14:00 15/09/2026",
+      "advisor": "PGS.TS Nguyễn Văn A",
+      "message": "Đặt lịch thành công cho sinh viên SV2026001 với PGS.TS Nguyễn Văn A vào lúc 14:00 15/09/2026."
+    },
+    "latency_ms": 794.76
+  },
+  {
+    "step": 2,
+    "query": "Hãy đặt lịch tư vấn học vụ cho sinh viên SV2026001 với cố vấn PGS.TS Nguyễn Văn A vào lúc 14:00 ngày 15/09/2026.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Groq phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "✅ Đặt lịch thành công!  \n- **Sinh viên:** SV2026001  \n- **Cố vấn:** PGS.TS Nguyễn Văn A  \n- **Thời gian:** 14:00 ngày 15/09/2026  \n- **Mã đặt lịch:** BK-SV2026001-99\n\nNếu cần thay đổi hoặc hủy, vui lòng liên hệ bộ phận tư vấn học vụ. Chúc bạn thành công!",
+    "latency_ms": 445.93
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu GPA và tên cố vấn học tập của sinh viên SV2026002, sau đó đặt lịch tư vấn cho sinh viên này với đúng cố vấn vào lúc 09:30 ngày 18/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "academic_query",
+    "arguments": {
+      "student_id": "SV2026002"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "student_id": "SV2026002",
+      "data": {
+        "full_name": "Trần Thị Bình",
+        "class": "AI-K4",
+        "gpa": 3.6,
+        "email": "binh.tt@vinuni.edu.vn",
+        "status": "Đang học",
+        "advisor": "TS. Lê Thị B"
+      }
+    },
+    "latency_ms": 1566.7
+  },
+  {
+    "step": 2,
+    "query": "Hãy tra cứu GPA và tên cố vấn học tập của sinh viên SV2026002, sau đó đặt lịch tư vấn cho sinh viên này với đúng cố vấn vào lúc 09:30 ngày 18/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "schedule_appointment",
+    "arguments": {
+      "advisor_name": "TS. Lê Thị B",
+      "datetime_str": "09:30 18/09/2026",
+      "student_id": "SV2026002"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "booking_id": "BK-SV2026002-99",
+      "student_id": "SV2026002",
+      "datetime": "09:30 18/09/2026",
+      "advisor": "TS. Lê Thị B",
+      "message": "Đặt lịch thành công cho sinh viên SV2026002 với TS. Lê Thị B vào lúc 09:30 18/09/2026."
+    },
+    "latency_ms": 572.15
+  },
+  {
+    "step": 3,
+    "query": "Hãy tra cứu GPA và tên cố vấn học tập của sinh viên SV2026002, sau đó đặt lịch tư vấn cho sinh viên này với đúng cố vấn vào lúc 09:30 ngày 18/09/2026.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Groq phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "**Thông tin sinh viên:**\n\n- **Mã sinh viên:** SV2026002  \n- **Tên:** Trần Thị Bình  \n- **GPA:** 3.6  \n- **Cố vấn học tập:** TS. Lê Thị B  \n\n**Xác nhận lịch hẹn:**\n\n- **Ngày giờ:** 09:30, 18/09/2026  \n- **Cố vấn:** TS. Lê Thị B  \n- **Mã đặt lịch:** BK‑SV2026002‑99  \n\nLịch hẹn đã được đặt thành công. Nếu cần điều chỉnh thời gian hoặc có thêm yêu cầu, vui lòng thông báo. Chúc một buổi tư vấn hiệu quả!",
+    "latency_ms": 663.36
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu GPA, lịch thi và thông tin cố vấn học tập của sinh viên có mã SV9999999.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "academic_query",
+    "arguments": {
+      "student_id": "SV9999999"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy dữ liệu sinh viên có mã 'SV9999999'"
+    },
+    "latency_ms": 344.98
+  },
+  {
+    "step": 2,
+    "query": "Hãy tra cứu GPA, lịch thi và thông tin cố vấn học tập của sinh viên có mã SV9999999.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Groq phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Xin lỗi, tôi không thể tìm thấy hồ sơ của sinh viên có mã **SV9999999** trong hệ thống. Có thể mã sai hoặc sinh viên chưa được ghi nhận. Bạn có thể kiểm tra lại mã sinh viên hoặc liên hệ với phòng đăng ký để được hỗ trợ.",
+    "latency_ms": 606.33
   }
 ]

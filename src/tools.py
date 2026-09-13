@@ -4,7 +4,11 @@ Mã nguồn chứa danh sách Tool Schemas (JSON Schema) và Execution Layer ph�
 """
 
 import json
+import os
 from typing import Dict, Any
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ==============================================================================
 # 1. KHAI BÁO TOOL SCHEMAS CHUẨN NATIVE JSON SCHEMA (TASK 1.2)
@@ -14,16 +18,16 @@ TOOLS_SCHEMA = [
     # Tool 1: Đã được định nghĩa mẫu sẵn cho Học viên tham khảo
     {
         "name": "academic_query",
-        "description": "Tra cứu hồ sơ và thông tin học vụ của sinh viên VinUni bằng mã sinh viên.",
+        "description": "Tra cứu hồ sơ và thông tin học vụ. Có thể bỏ student_id để tra cứu sinh viên đang đăng nhập (CURRENT_STUDENT_ID).",
         "parameters": {
             "type": "object",
             "properties": {
                 "student_id": {
                     "type": "string",
-                    "description": "Mã sinh viên cần tra cứu (ví dụ: 'SV2026001')"
+                    "description": "Mã sinh viên; bỏ qua nếu tra cứu hồ sơ sinh viên đang đăng nhập."
                 }
             },
-            "required": ["student_id"]
+            "required": []
         }
     },
     
@@ -32,20 +36,31 @@ TOOLS_SCHEMA = [
     # 🎯 YÊU CẦU THIẾT KẾ SCHEMA (JSON SCHEMA STANDARD):
     # 1. Tool dùng để đặt lịch hẹn tư vấn học vụ với Cố vấn học tập VinUni.
     # 2. Thiết kế các tham số (properties) để LLM trích xuất:
-    #    - student_id (string): Mã sinh viên cần đặt lịch (ví dụ: 'SV2026001')
+    #    - student_id (string, optional): Mặc định lấy hồ sơ sinh viên đang đăng nhập
     #    - datetime_str (string): Thời gian hẹn (ví dụ: '14:00 15/09/2026')
-    #    - advisor_name (string): Tên cố vấn học tập
-    # 3. Khai báo danh sách các trường bắt buộc (required).
+    #    - advisor_name (string, optional): Mặc định lấy cố vấn trong hồ sơ sinh viên
+    # 3. Chỉ datetime_str là bắt buộc; danh tính lấy từ ngữ cảnh người dùng.
     # --------------------------------------------------------------------------
     {
         "name": "schedule_appointment",
-        "description": "Đặt lịch hẹn tư vấn học vụ với Cố vấn học tập VinUni.",
+        "description": "Đặt lịch với cố vấn học tập. Bỏ student_id và advisor_name để dùng hồ sơ sinh viên đang đăng nhập và cố vấn đã gán.",
         "parameters": {
             "type": "object",
             "properties": {
-                # TODO 1.2: Khai báo các thuộc tính tham số cho Tool tại đây...
+                "student_id": {
+                    "type": "string",
+                    "description": "Mã sinh viên; bỏ qua để dùng hồ sơ sinh viên đang đăng nhập."
+                },
+                "datetime_str": {
+                    "type": "string",
+                    "description": "Thời gian hẹn (ví dụ: '14:00 15/09/2026')"
+                },
+                "advisor_name": {
+                    "type": "string",
+                    "description": "Tên cố vấn; bỏ qua để dùng cố vấn được gán trong hồ sơ sinh viên."
+                }
             },
-            "required": [] # TODO 1.2: Khai báo danh sách các trường bắt buộc tại đây...
+            "required": ["datetime_str"]
         }
     }
 ]
@@ -74,9 +89,25 @@ MOCK_DATABASE = {
 }
 
 
-def execute_academic_query(student_id: str) -> str:
-    """Thực thi tra cứu học vụ theo mã sinh viên"""
-    student = MOCK_DATABASE.get(student_id.strip().upper())
+def _resolve_student_id(student_id: str = None) -> str:
+    """Dùng mã được truyền vào hoặc hồ sơ người dùng hiện tại trong phiên."""
+    return (student_id or os.getenv("CURRENT_STUDENT_ID", "")).strip().upper()
+
+
+def _missing_student_context() -> str:
+    return json.dumps({
+        "status": "CONTEXT_REQUIRED",
+        "message": "Chưa có hồ sơ sinh viên hiện tại. Đăng nhập và truyền student_id từ session; trong demo, cấu hình CURRENT_STUDENT_ID trong .env."
+    }, ensure_ascii=False)
+
+
+def execute_academic_query(student_id: str = None) -> str:
+    """Tra cứu hồ sơ theo mã chỉ định hoặc hồ sơ người dùng hiện tại."""
+    student_id = _resolve_student_id(student_id)
+    if not student_id:
+        return _missing_student_context()
+
+    student = MOCK_DATABASE.get(student_id)
     if student:
         return json.dumps({
             "status": "SUCCESS",
@@ -90,8 +121,26 @@ def execute_academic_query(student_id: str) -> str:
         }, ensure_ascii=False)
 
 
-def execute_schedule_appointment(student_id: str, datetime_str: str, advisor_name: str = "PGS.TS Nguyễn Văn A") -> str:
-    """Thực thi đặt lịch hẹn tư vấn học vụ"""
+def execute_schedule_appointment(
+    student_id: str = None,
+    datetime_str: str = None,
+    advisor_name: str = None,
+) -> str:
+    """Đặt lịch; tự lấy sinh viên và cố vấn từ hồ sơ hiện tại nếu không truyền."""
+    student_id = _resolve_student_id(student_id)
+    if not student_id:
+        return _missing_student_context()
+
+    student = MOCK_DATABASE.get(student_id)
+    if not student:
+        return json.dumps({"status": "NOT_FOUND", "message": f"Không tìm thấy dữ liệu sinh viên có mã '{student_id}'"}, ensure_ascii=False)
+    if not datetime_str:
+        return json.dumps({"status": "NEEDS_INPUT", "field": "datetime_str", "message": "Cần ngày và giờ muốn đặt lịch."}, ensure_ascii=False)
+
+    advisor_name = advisor_name or student.get("advisor")
+    if not advisor_name:
+        return json.dumps({"status": "ADVISOR_NOT_FOUND", "message": "Hồ sơ hiện tại chưa có cố vấn được gán."}, ensure_ascii=False)
+
     return json.dumps({
         "status": "SUCCESS",
         "booking_id": f"BK-{student_id}-99",
